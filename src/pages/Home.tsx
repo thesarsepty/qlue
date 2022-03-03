@@ -1,75 +1,21 @@
-import React, { useState, useEffect } from 'react'
+// import React, { useState, useEffect } from 'react'
+import { useNavigate } from "react-router-dom";
+import { getDatas } from '../datas/data'
+import useFetch from '../hooks/useFetch';
 
 const Home = () => {
-  const [data, setData] = useState<any>([])
-  const response = {
-    message: 'Success to get data',
-    data: [
-      {
-        id: '1',
-        first_name: 'John',
-        last_name: 'Doe',
-        skills: {
-          javascript: 'advanced',
-          python: 'basic',
-          golang: 'expert',
-          php: 'expert'
-        }
-      },
-      {
-        id: '2',
-        first_name: 'Will',
-        last_name: 'Smith',
-        skills: {
-          javascript: 'expert',
-          python: 'basic',
-          golang: 'advanced',
-          php: 'advanced'
-        }
-      },
-      {
-        id: '3',
-        first_name: 'Jaden',
-        last_name: 'Smith',
-        skills: {
-          javascript: 'expert',
-          python: 'expert',
-          golang: 'expert',
-          php: 'expert'
-        }
-      },
-      {
-        id: '4',
-        first_name: 'El',
-        last_name: 'Professor',
-        skills: {
-          javascript: 'advanced',
-          python: 'basic',
-          golang: 'intermediate',
-          php: 'intermediate'
-        }
-      },
-    ]
+  const navigate = useNavigate()
+  const response = getDatas()
+  const data = useFetch(response)
+
+  const handleClick = (fullName: string) => {
+    const selected = data.find(
+      (val:any) => val.full_name === fullName
+      );
+      // console.log(selected)
+      navigate(`/profile/${fullName}`, {state: selected})
   }
-
-  const manipulate = (response: any) => {
-    const dt = response.data.map((val:any) => {
-      const expert_skills = []
-      for (let key in val.skills){
-        if(val.skills[key] === 'expert'){
-          expert_skills.push(key)
-        }
-      }
-      return {id: val.id, full_name: `${val.first_name} ${val.last_name}`, expert_skills}
-    })
-    setData(dt) 
-  }
-
-  useEffect(() => {
-    manipulate(response)
-  }, [])
-  
-
+   
   return (
     <div style={
       {
@@ -87,9 +33,13 @@ const Home = () => {
             borderRadius:'4px',
             textAlign: 'center',
             padding:'2rem',
-            color: 'white'
+            color: 'white',
+            cursor:'pointer'
             }
-          }>
+          }
+          onClick={() => handleClick(val.full_name)}
+          key={val.id}
+          >
           <h1>{val.full_name}</h1>
           <p>Expert Skills:</p>
           <p style={{textTransform: 'capitalize',}}>

@@ -1,2 +1,0 @@
-# qlue
-Technical Test
