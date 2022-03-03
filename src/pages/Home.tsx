@@ -71,18 +71,34 @@ const Home = () => {
   
 
   return (
-    <>
+    <div style={
+      {
+        display:'grid', 
+        gridTemplateColumns:  '50% 50%',
+        gap: '10px', 
+        padding: '1rem',
+     }
+    }>
     {
       data.map((val: any) => { 
-        return <div style={{paddingBottom:'16px'}}>
-          <p>{val.full_name}</p>
-          <p style={{textTransform: 'capitalize'}}>
+        return <div style={
+            {
+            backgroundColor: 'cadetblue',
+            borderRadius:'4px',
+            textAlign: 'center',
+            padding:'2rem',
+            color: 'white'
+            }
+          }>
+          <h1>{val.full_name}</h1>
+          <p>Expert Skills:</p>
+          <p style={{textTransform: 'capitalize',}}>
             {val.expert_skills.length > 0 ? val.expert_skills.join(', ') : '-'}
           </p>
         </div>
       })
     }
-  </>
+  </div>
   )
 }
 
