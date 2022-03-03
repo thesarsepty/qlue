@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 
 const Home = () => {
-  const [data, setData] = useState<any>()
+  const [data, setData] = useState<any>([])
   const response = {
     message: 'Success to get data',
     data: [
@@ -57,7 +57,6 @@ const Home = () => {
       const expert_skills = []
       for (let key in val.skills){
         if(val.skills[key] === 'expert'){
-          // console.log(key,val, 'sadsad')
           expert_skills.push(key)
         }
       }
@@ -65,22 +64,25 @@ const Home = () => {
     })
     setData(dt) 
   }
-// [
-//   {
-//     id: '1',
-//     full_name: 'John Doe',
-//     expert_skills: [ 'golang', 'php' ]
-//   },
-// ]
+
   useEffect(() => {
     manipulate(response)
   }, [])
   
 
   return (
-    <div>
-      Home
-    </div>
+    <>
+    {
+      data.map((val: any) => { 
+        return <div style={{paddingBottom:'16px'}}>
+          <p>{val.full_name}</p>
+          <p style={{textTransform: 'capitalize'}}>
+            {val.expert_skills.length > 0 ? val.expert_skills.join(', ') : '-'}
+          </p>
+        </div>
+      })
+    }
+  </>
   )
 }
 
