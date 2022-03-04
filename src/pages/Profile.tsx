@@ -5,7 +5,6 @@ import { useLocation } from "react-router-dom";
 const Profile = () => {
   const [profile, setProfile] = useState<any>()
   const { state } = useLocation()
-  // console.log(state, 'params')
   useEffect(() => {
     if(state){
       setProfile(state)
